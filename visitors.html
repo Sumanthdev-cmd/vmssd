@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Add table border styles */
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Ensures borders are merged */
+        }
+
+        th, td {
+            border: 1px solid #ddd; /* Adds a border to table cells */
+            padding: 8px;
+            text-align: left;
+            width: 14%; /* Ensures equal width for all columns */
+        }
+
+        th {
+            background-color: #f4f4f4; /* Slight background for headers */
+            justify-content: center;
+        }
+
+        /* Styling for form and inputs */
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #0e4b99;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Centering the content in the container */
+        .container1 {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .container2 {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Prevent manual input for date and time */
+        #Date, #Time {
+            pointer-events: none; /* Disables user input */
+            background-color: #f0f0f0; /* Grayed out background to indicate read-only */
+        }
+    </style>
+</head>
+<body>
+    <div class="container1">
+        <h2>Visitor Check-In</h2>
+        <form id="visitorForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="phone">Phone_Number:</label>
+            <input type="tel" id="phone" required>
+
+            <label for="purpose">Purpose of Visit:</label>
+            <input type="text" id="purpose" required>
+	    
+            <label for="person">Person to Visit:</label>
+            <input type="text" id="person" required>
+
+            <label for="designation">Designation:</label>
+            <input type="text" id="designation" required>
+
+            <label for="Date">Date:month/day/year</label>
+            <input type="date" id="Date" required readonly>
+
+            <label for="Time">Check-in Time:</label>
+            <input type="time" id="Time" required readonly>
+
+            <button type="submit">Check-In</button>
+        </form>
+    </div>
+    
+    <div class="container2">
+        <h2>Visitor Log</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Purpose of Visit</th>
+                    <th>Person to Meet</th>
+                    <th>Designation</th>
+                    <th>Date:mm/dd/yy</th>
+                    <th>Check-In Time</th>
+                </tr>
+            </thead>
+            <tbody id="visitorTableBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        // JavaScript to set default current date and time
+        window.onload = function() {
+            // Get current date and time
+            let currentDate = new Date();
+            let year = currentDate.getFullYear();
+            let month = ("0" + (currentDate.getMonth() + 1)).slice(-2); // Format month as MM
+            let day = ("0" + currentDate.getDate()).slice(-2); // Format day as DD
+            let currentTime = currentDate.toTimeString().split(' ')[0].slice(0, 5); // Format time as HH:MM
+
+            // Set the date and time input fields to the current date and time
+            document.getElementById("Date").value = `${year}-${month}-${day}`;
+            document.getElementById("Time").value = currentTime;
+        };
+    </script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
