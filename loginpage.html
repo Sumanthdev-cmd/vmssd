@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-image: url('./WhatsApp Image 2025-03-05 at 11.14.28_b73252e4.jpg'); 
+      background-size: cover;
+      background-position: center;
+    }
+
+    .login-container {
+      background-color: rgba(255, 255, 255, 0.9); 
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      font-weight: bold;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .button {
+      width: 100%;
+      padding: 10px;
+      background-color:rgb(205, 43, 70);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #f17c7c;
+    }
+
+    .error-message {
+      color: red;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Login</h2>
+    <div class="input-group">
+      <label for="user-id">User ID</label>
+      <input type="text" id="user-id" placeholder="Enter User ID">
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter Password">
+    </div>
+    <button class="button" onclick="login()">Login</button>
+    <div class="error-message" id="error-message"></div>
+  </div>
+
+  <script>
+    // Predefined users
+    const users = [
+      { id: 'user1', password: 'password1' },
+      { id: 'user2', password: 'password2' }
+    ];
+
+    function login() {
+      // Get the input values
+      const userId = document.getElementById('user-id').value;
+      const password = document.getElementById('password').value;
+
+      // Check for valid user
+      const user = users.find(u => u.id === userId && u.password === password);
+
+      // If the user is found, redirect or show success message
+      if (user) {
+        alert('Login successful!');
+        window.location.href = 'visitors.html'; // example redirection
+      } else {
+        // If user is not found, show error message
+        document.getElementById('error-message').textContent = 'Invalid User ID or Password';
+      }
+    }
+  </script>
+
+</body>
+</html>
