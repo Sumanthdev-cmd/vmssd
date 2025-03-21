@@ -1,49 +1,57 @@
 import streamlit as st
 
-st.set_page_config(page_title="Malnad College Visitors Management System", layout="centered")
+# Page Configuration
+st.set_page_config(page_title="Malnad College Visitors", layout="wide")
 
-st.title("Malnad College Visitors Management System")
-st.markdown("---")
-
-menu = ["Home", "Login", "Visitor Check-In", "Visitor Log", "Contact"]
+# Navigation
+menu = ["Home", "Login", "Visitor Check-In"]
 choice = st.sidebar.selectbox("Navigation", menu)
 
 if choice == "Home":
-    st.subheader("About Us")
+    st.title("Welcome to Malnad College of Engineering!")
+    st.markdown("Here's the Visitor's Management System.")
+
+    st.image("./WhatsApp Image 2025-03-04 at 16.24.44_1b7a5269.jpg", width=700)
+    st.write("### About Us")
     st.write("Welcome to our prestigious college where excellence meets education.")
+    st.write("### Contact Us")
+    st.write("Email: contact@collegename.edu | Phone: 123-456-7890")
 
 elif choice == "Login":
-    st.subheader("Login Page")
-    user_id = st.text_input("Enter User ID")
-    password = st.text_input("Enter Password", type="password")
+    st.title("Login Page")
+    user_id = st.text_input("User ID")
+    password = st.text_input("Password", type="password")
+
     if st.button("Login"):
-        if (user_id, password) in [("user1", "password1"), ("user2", "password2")]:
+        if (user_id == 'user1' and password == 'password1') or (user_id == 'user2' and password == 'password2'):
             st.success("Login successful!")
+            st.session_state['authenticated'] = True
         else:
             st.error("Invalid User ID or Password")
 
 elif choice == "Visitor Check-In":
-    st.subheader("Visitor Check-In Form")
-    name = st.text_input("Full Name")
-    phone = st.text_input("Phone Number")
-    purpose = st.text_input("Purpose of Visit")
-    person = st.text_input("Person to Visit")
-    designation = st.text_input("Designation")
-    if st.button("Submit"):
-        st.success("Visitor Checked In Successfully!")
+    if 'authenticated' not in st.session_state or not st.session_state['authenticated']:
+        st.warning("Please login first.")
+    else:
+        st.title("Visitor Check-In")
+        with st.form("checkin_form"):
+            name = st.text_input("Full Name:")
+            phone = st.text_input("Phone Number:")
+            purpose = st.text_input("Purpose of Visit:")
+            person = st.text_input("Person to Visit:")
+            designation = st.text_input("Designation:")
+            date = st.date_input("Date:")
+            time = st.time_input("Check-In Time:")
+            submit = st.form_submit_button("Check-In")
 
-elif choice == "Visitor Log":
-    st.subheader("Visitor Log")
-    sample_data = [
-        ["John Doe", "1234567890", "Meeting", "Dr. Smith", "Professor"],
-        ["Jane Smith", "0987654321", "Interview", "Dr. John", "Dean"]
-    ]
-    st.table(sample_data)
+        if submit:
+            st.success("Visitor checked in successfully!")
+            if 'visitor_log' not in st.session_state:
+                st.session_state['visitor_log'] = []
+            st.session_state['visitor_log'].append(
+                {"Name": name, "Phone": phone, "Purpose": purpose, "Person": person, "Designation": designation, "Date": date, "Time": time}
+            )
 
-elif choice == "Contact":
-    st.subheader("Contact Us")
-    st.write("Email: contact@collegename.edu | Phone: 123-456-7890")
-
-st.markdown("---")
-st.text("© 2025 Malnad College of Engineering. All rights reserved.")
-
+        st.write("### Visitor Log")
+        if 'visitor_log' in st.session_state:
+            st.table(st.session_state['visitor_log'])
